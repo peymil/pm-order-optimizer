@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar-white {
+    scrollbar-base-color: white;
+    scrollbar-color: white white;
+    scrollbar-shadow-color: white;
+    overflow-y: auto;
+}

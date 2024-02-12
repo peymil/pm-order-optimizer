@@ -1,7 +1,6 @@
 'use client'
-import React, {useMemo} from 'react'
-import {GoogleMap, useJsApiLoader, Marker, Circle} from '@react-google-maps/api';
-import {getRandomColor} from "@/utils/getRandomColor";
+import React from 'react'
+import {GoogleMap, useJsApiLoader, Circle} from '@react-google-maps/api';
 import {Point} from "@/types";
 
 
@@ -23,7 +22,6 @@ function OrderMap({points, groupColors}: Readonly<{ points: Point[], groupColors
             {
                 points.map((point, index) => {
                     const color = groupColors[point.group]
-                    console.log(point)
                     return <Circle key={index} radius={4} center={{lat: point.lat, lng: point.lon}}
                                    options={{
                                        fillColor: color,

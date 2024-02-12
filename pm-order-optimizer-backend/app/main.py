@@ -12,7 +12,6 @@ fronted_url = os.getenv("FRONTEND_DEV_URL")
 origins = []
 if fronted_url:
     origins.append(fronted_url)
-print("origins: " + str(origins))
 
 app = FastAPI()
 app.add_middleware(

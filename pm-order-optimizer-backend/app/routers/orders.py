@@ -21,7 +21,7 @@ nominantim = Nominatim(user_agent="pm-order", scheme="http")
 
 
 @router.post("/seed")
-async def seed_orders(seed_orders_input: SeedOrdersInput, db: Session = Depends(get_db)) -> List[OrderSchema]:
+def seed_orders(seed_orders_input: SeedOrdersInput, db: Session = Depends(get_db)) -> List[OrderSchema]:
     points = generate_points(seed_orders_input.count)
     orders = []
     for p in points:
@@ -33,13 +33,13 @@ async def seed_orders(seed_orders_input: SeedOrdersInput, db: Session = Depends(
 
 
 @router.get("/")
-async def get_orders(db: Session = Depends(get_db)) -> List[OrderSchema]:
+def get_orders(db: Session = Depends(get_db)) -> List[OrderSchema]:
     return order_repository.get_orders(db)
 
 
 @router.post("/group")
-async def group_orders(group_orders_input: GroupOrdersInput, db: Session = Depends(get_db)) -> List[OrderSchema]:
-    orders = await get_orders(db)
+def group_orders(group_orders_input: GroupOrdersInput, db: Session = Depends(get_db)) -> List[OrderSchema]:
+    orders = get_orders(db)
     if group_orders_input.algorithm == "kmeans":
         grouped_points = cluster_with_kmeans(orders, group_orders_input.group_count)
     elif group_orders_input.algorithm == "kmeans-constrained":
@@ -56,15 +56,13 @@ async def group_orders(group_orders_input: GroupOrdersInput, db: Session = Depen
 
 
 @router.post("/reverse-geocode")
-async def reverse_geocode(db: Session = Depends(get_db)) -> OrderSchema:
-    orders = await get_orders(db)
+def reverse_geocode(db: Session = Depends(get_db)) -> None:
+    orders = get_orders(db)
     for order in orders:
         location = nominantim.reverse((order.lat, order.lon), timeout=5)
         order_repository.update_address(db, location, order.id)
-        order.address = location.address
-    return orders
 
 
 @router.delete("")
-async def delete_order(db: Session = Depends(get_db)) -> None:
+def delete_order(db: Session = Depends(get_db)) -> None:
     return order_repository.delete_orders(db)

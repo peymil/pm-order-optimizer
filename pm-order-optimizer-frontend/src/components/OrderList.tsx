@@ -1,4 +1,4 @@
-import {Order, Point} from "@/types";
+import {Order} from "@/types";
 import _ from "lodash"
 import React from "react";
 
@@ -7,7 +7,7 @@ const OrderList = ({orders, groupColors}: { orders: Order[], groupColors: string
         return Object.entries(_.groupBy(orders, 'group'))
     }, [orders])
     return (
-        <div className={"overflow-y-auto"}>
+        <div className={"scrollbar-white"}>
             <h1>Points</h1>
             <ul className={"h-svh"}>
                 {groupedOrders.map(([group, orders], index) => {

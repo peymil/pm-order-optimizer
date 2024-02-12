@@ -8,19 +8,8 @@ import {Order} from "@/types";
 import OrderList from "@/components/OrderList";
 import {base_url} from "@/constant";
 
-
-const containerStyle = {
-    width: '400px',
-    height: '400px'
-};
-
-const center = {
-    lat: -3.745,
-    lng: -38.523
-};
-
 function Page() {
-    const {status, data, error, isFetching, refetch} = useQuery<Order[]>({
+    const {data, isFetching, refetch} = useQuery<Order[]>({
         queryKey: ['orders'],
         queryFn: () => {
             return axios.get(`${base_url}/orders/`).then(response => response.data)
@@ -62,12 +51,12 @@ function Page() {
         if (!data) return []
         const groups = data.map(point => point.group)
         const uniqueGroups = Array.from(new Set(groups))
-        return uniqueGroups.map(group => getRandomColor())
+        return uniqueGroups.map(_ => getRandomColor())
     }, [data])
     return (
         <>
             <main className="flex min-h-screen flex-col items-center justify-between bg-black">
-                <div className={"flex flex-row justify-evenly"}>
+                <div className={"flex flex-row space-x-4 justify-evenly"}>
                     {
                         isFetching ? <p>Loading...</p> :
                             <>
