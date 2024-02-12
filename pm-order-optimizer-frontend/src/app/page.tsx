@@ -3,10 +3,11 @@ import React, {useMemo} from 'react'
 import OrderMap from "@/components/OrderMap";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import {base_url} from "@/constant";
 import {getRandomColor} from "@/utils/getRandomColor";
 import {Order} from "@/types";
 import OrderList from "@/components/OrderList";
+import {base_url} from "@/constant";
+
 
 const containerStyle = {
     width: '400px',
