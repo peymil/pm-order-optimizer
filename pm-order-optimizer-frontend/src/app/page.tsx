@@ -56,7 +56,7 @@ function Page() {
     return (
         <>
             <main className="flex min-h-screen flex-col items-center justify-between bg-black">
-                <div className={"flex flex-row space-x-4 justify-evenly"}>
+                <div className={"flex flex-row space-x-4 justify-evenly upper-page-container"}>
                     {
                         isFetching ? <p>Loading...</p> :
                             <>

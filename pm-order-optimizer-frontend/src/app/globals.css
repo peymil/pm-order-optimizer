@@ -8,3 +8,7 @@
     scrollbar-shadow-color: white;
     overflow-y: auto;
 }
+
+.upper-page-container {
+    height: 80vh;
+}

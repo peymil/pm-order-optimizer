@@ -15,7 +15,7 @@ function OrderMap({points, groupColors}: Readonly<{ points: Point[], groupColors
 
     return isLoaded ? (
         <GoogleMap
-            mapContainerStyle={{width: "100vh", height: '100vh'}}
+            mapContainerStyle={{width: "100vh", height: '80vh'}}
             center={points.length > 0 ? {lat: points[0].lat, lng: points[0].lon} : center}
             zoom={16}
         >
