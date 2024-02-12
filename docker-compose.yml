@@ -1,0 +1,33 @@
+version: "3.0"
+services:
+  pm-order-backend:
+    ports:
+      - "8000:8000"
+    build: ./pm-order-optimizer-backend
+    environment:
+      SQLALCHEMY_DATABASE_URL: "mysql://root:root@pm-mysql:3306/pm"
+      FRONTEND_DEV_URL: "http://localhost:3000"
+    depends_on:
+      pm-mysql:
+        condition: service_healthy
+  pm-order-frontend:
+    ports:
+      - "3000:3000"
+    build:
+      context: ./pm-order-optimizer-frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
+        NEXT_PUBLIC_BACKEND_URL: "http://localhost:8000"
+    depends_on:
+      - pm-order-backend
+  pm-mysql:
+    image: "mysql:8.3.0"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+      interval: 5s
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "pm"
